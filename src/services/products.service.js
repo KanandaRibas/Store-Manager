@@ -11,4 +11,11 @@ const getProductById = async (id) => {
   if (!product.length) return { type: 404, message: 'Product not found' };
   return { type: null, message: product };
 };
-module.exports = { getProducts, getProductById };
+
+const insertProduct = async (name) => {
+  const product = await productsModel.insertProduct(name);
+
+  return { type: null, message: product };
+};
+
+module.exports = { getProducts, getProductById, insertProduct };
