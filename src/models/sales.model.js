@@ -1,28 +1,47 @@
+// const camelize = require('camelize');
 const connection = require('./db/connection');
 
 const insertSales = async () => {
   const [{ insertId }] = await connection.execute(
     'INSERT INTO StoreManager.sales (date) VALUES (NOW())',
   );
-  console.log('chamou o insert sales do model');
   return insertId;
 };
 
-const getSaleId = async () => {
-  const [[{ id }]] = await connection.execute(
-    'SELECT max(id) AS id FROM StoreManager.sales',
-  );
-  console.log('model', id);
-   return id;
- };
-
-const insertSalesProducts = async ({ productId, quantity }) => {
-  const id = await getSaleId();
+const insertSalesProducts = async (id, { productId, quantity }) => {
   await connection.execute(
     'INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
     [id, productId, quantity],
   );
-  console.log('terminou insert sales products model');
 };
 
-module.exports = { insertSales, insertSalesProducts };
+const findSales = async () => {
+  const [result] = await connection.execute(
+    `SELECT 
+      s.id AS saleId, s.date, p.product_id AS productId, p.quantity
+  FROM
+      StoreManager.sales s
+          INNER JOIN
+      StoreManager.sales_products p ON p.sale_id = s.id
+  ORDER BY s.id ASC`,
+  );
+  return (result);
+};
+
+const findSalesProducts = async (id) => {
+  const [result] = await connection.execute(
+    `SELECT 
+      s.date, p.product_id AS productId, p.quantity
+  FROM
+      StoreManager.sales s
+          INNER JOIN
+      StoreManager.sales_products p ON p.sale_id = s.id
+  HAVING s.id = (?)
+  ORDER BY s.id ASC`, // corrigir - query com erro
+    [id],
+  );
+  console.log('terminou findsalesproducts sales_products model result:', result);
+  return (result);
+};
+
+module.exports = { insertSales, insertSalesProducts, findSales, findSalesProducts };

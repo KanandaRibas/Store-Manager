@@ -17,9 +17,22 @@ const insertSales = async (sales) => {
   if (!validSales) return { type: 404, message: 'Product not found' };
   const id = await salesModel.insertSales();
   validSales.map(async (sale) => {
-    await salesModel.insertSalesProducts(sale);
+    await salesModel.insertSalesProducts(id, sale);
   });
   return { type: null, message: { id, itemsSold: sales } };
 };
 
-module.exports = { insertSales };
+const getSales = async () => {
+  const sales = await salesModel.findSales(); // retorna [ {sale_id, date } ] 
+
+  return { type: null, message: sales };
+};
+
+const getSaleById = async (id) => {
+  const sale = await salesModel.findSalesProducts(id); // retorna [ {sale_id, product_id, quantity} ] 
+  if (!sale.length) return { type: 404, message: 'Sale not found' };
+
+  return { type: null, message: sale };
+};
+
+module.exports = { insertSales, getSales, getSaleById };
