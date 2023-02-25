@@ -14,8 +14,8 @@ const getProductById = async (id) => {
 };
 
 const insertProduct = async (name) => {
-  await productsModel.insertProduct(name);
-  const [insertByName] = await productsModel.getByName(name);
+  const id = await productsModel.insertProduct(name);
+  const [insertByName] = await productsModel.getProductById(id);
   
   return { type: null, message: insertByName };
 };
