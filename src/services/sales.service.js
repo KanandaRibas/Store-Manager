@@ -23,13 +23,12 @@ const insertSales = async (sales) => {
 };
 
 const getSales = async () => {
-  const sales = await salesModel.findSales(); // retorna [ {sale_id, date } ] 
-
+  const sales = await salesModel.findSales();
   return { type: null, message: sales };
 };
 
 const getSaleById = async (id) => {
-  const sale = await salesModel.findSalesProducts(id); // retorna [ {sale_id, product_id, quantity} ] 
+  const sale = await salesModel.findSalesProducts(id);
   if (!sale.length) return { type: 404, message: 'Sale not found' };
 
   return { type: null, message: sale };

@@ -36,11 +36,10 @@ const findSalesProducts = async (id) => {
       StoreManager.sales s
           INNER JOIN
       StoreManager.sales_products p ON p.sale_id = s.id
-  HAVING s.id = (?)
-  ORDER BY s.id ASC`, // corrigir - query com erro
+  WHERE s.id = (?)
+  ORDER BY s.id ASC`,
     [id],
   );
-  console.log('terminou findsalesproducts sales_products model result:', result);
   return (result);
 };
 
