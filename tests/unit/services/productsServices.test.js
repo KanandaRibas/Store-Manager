@@ -54,5 +54,7 @@ describe('Testa a camada service para a rota "/products"', function () {
       expect(response.message).to.be.deep.equal(newProduct);
     });
   });
-
+  afterEach(function () {
+    sinon.restore();
+  });
 });

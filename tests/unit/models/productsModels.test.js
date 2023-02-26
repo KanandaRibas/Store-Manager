@@ -35,5 +35,7 @@ describe('Testa a camada model para a rota "/products"', function () {
       expect(response).to.be.equal(3);
     });
   });
-  
+  afterEach(function () {
+    sinon.restore();
+  });
 });
