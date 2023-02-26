@@ -3,7 +3,7 @@ const { expect } = require('chai');
 
 const productsService = require('../../../src/services/products.service');
 const productsModel = require('../../../src/models/products.model');
-const { products, product1, id, newProduct, name, } = require('../mock/products.mock');
+const { products, product1, newProduct} = require('../mock/products.mock');
 
 describe('Testa a camada service para a rota "/products"', function () {
 
@@ -27,22 +27,31 @@ describe('Testa a camada service para a rota "/products"', function () {
 
       sinon.stub(productsModel, 'getProductById').resolves([product1]);
 
-      const response = await productsService.getProductById(id);
+      const response = await productsService.getProductById(product1.id);
 
       expect(response).to.be.deep.equal(result);
+    });
+    it('retorna um erro caso o produto não exista', async function () {
+      
+      sinon.stub(productsModel, 'getProductById').resolves([]);
+     
+      const result = await productsService.getProductById('a');
+      
+      expect(result.type).to.equal(404);
+      expect(result.message).to.equal('Product not found');
     });
   });
 
   describe('Testa a camada service para a função "insertProduct"', async function () {
     it('Cadastro de um produto pelo nome', async function () {
-      const result = { type: null, message: newProduct }
 
-      sinon.stub(productsModel, 'insertProduct').resolves(undefined);
-      sinon.stub(productsModel, 'getByName').resolves([newProduct]);
+      sinon.stub(productsModel, 'insertProduct').resolves(4);
+      sinon.stub(productsModel, 'getProductById').resolves([newProduct]);
 
-      const response = await productsService.insertProduct(name);
+      const response = await productsService.insertProduct(newProduct.name);
 
-      expect(response).to.be.deep.equal(result);
+      expect(response.type).to.equal(null);
+      expect(response.message).to.be.deep.equal(newProduct);
     });
   });
 

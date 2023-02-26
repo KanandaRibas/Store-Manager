@@ -3,7 +3,7 @@ const { expect } = require('chai');
 
 const connection = require('../../../src/models/db/connection');
 const productsModel = require('../../../src/models/products.model');
-const { products, product1, id, newProduct } = require('../mock/products.mock');
+const { products, product1, id, newProduct, name } = require('../mock/products.mock');
 
 describe('Testa a camada model para a rota "/products"', function () {
 
@@ -29,10 +29,10 @@ describe('Testa a camada model para a rota "/products"', function () {
 
   describe('Testa a camada model para a função "insertProduct"', function () {
     it('Cadastro de um produto pelo nome', async function () {
-      sinon.stub(connection, 'execute').resolves();
+      sinon.stub(connection, 'execute').resolves([{ insertId: 3 }]);
 
-      const response = await productsModel.insertProduct(newProduct.name);
-      expect(response).to.be.equal(undefined);
+      const response = await productsModel.insertProduct(name);
+      expect(response).to.be.equal(3);
     });
   });
   
