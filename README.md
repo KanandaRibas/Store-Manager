@@ -1,10 +1,14 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Store Manager 🛍️
+
+Neste projeto desenvolvi uma API RESTful para gerenciamento de vendas no formato dropshipping.
+
+Tecnologias utilizadas:
+- [Node.js](https://nodejs.org/en/about)
+- [MySQL](https://www.mysql.com/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Docker](https://docs.docker.com/get-started/)
+</br>
+
+No sistema é possível criar, visualizar, deletar e atualizar produtos e vendas. Para a gestão dos dados foi utilizado o MySQL, é possível inserir dados em mais de uma tabela, registrando as vendas, e as incluindo somente se os produtos são existentes. O sistema inclui testes unitários.
+
+O projeto foi desenvolvido durante o curso de desenvolvimento Web Full Stack da [Trybe](https://app.betrybe.com).
